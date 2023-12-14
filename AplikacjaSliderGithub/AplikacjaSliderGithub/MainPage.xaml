@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AplikacjaSliderGithub.MainPage">
+
+    <StackLayout>
+        <CarouselView x:Name="imageCarousel">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Image Source="{Binding ImageSource}" Aspect="AspectFit" />
+                        <Label Text="{Binding ImageName}" 
+                               HorizontalOptions="CenterAndExpand" 
+                               VerticalOptions="EndAndExpand"
+                               FontSize="20"
+                               />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <Button x:Name="toggleButton" Text="Stop Auto Slide" Clicked="OnToggleButtonClicked"/>
+    </StackLayout>
+
+</ContentPage>
