@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace AplikacjaSliderGithub
 {
     public class Images
     {
-        public string ImageSource { get; set; }
-        public string ImageName { get; set; }
+        public ImageSource ImageSource { get; set; }
     }
 }

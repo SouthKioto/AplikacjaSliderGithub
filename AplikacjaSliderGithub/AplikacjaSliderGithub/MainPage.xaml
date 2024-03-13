@@ -9,17 +9,13 @@
                 <DataTemplate>
                     <Grid>
                         <Image Source="{Binding ImageSource}" Aspect="AspectFit" />
-                        <Label Text="{Binding ImageName}" 
-                               HorizontalOptions="CenterAndExpand" 
-                               VerticalOptions="EndAndExpand"
-                               FontSize="20"
-                               />
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <Button x:Name="toggleButton" Text="Stop Auto Slide" Clicked="OnToggleButtonClicked"/>
+        <!--<Button x:Name="toggleButton" Text="Stop Auto Slide" Clicked="OnToggleButtonClicked"/>-->
+        <Button Text="Your gallery" Clicked="GoToYourGallery"/>
     </StackLayout>
 
 </ContentPage>

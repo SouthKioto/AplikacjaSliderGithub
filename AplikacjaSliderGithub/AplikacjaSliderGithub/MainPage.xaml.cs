@@ -1,51 +1,41 @@
-﻿using System;
+﻿using AplikacjaSliderGithub.Pages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AplikacjaSliderGithub
 {
     public partial class MainPage : ContentPage
     {
-
-        private List<Images> images;
-        private int currentIndex = 0;
-        private bool isAutoSlideEnabled = true;
-
         public MainPage()
         {
             InitializeComponent();
-
-            images = new List<Images>
-            {
-                new Images { ImageSource = "Bleach.jpg", ImageName="Bleach plakat 1" },
-                new Images { ImageSource = "bleach2.jpg", ImageName="Bleach plakat 2" },
-                new Images { ImageSource = "hellboy.jpg", ImageName="Hellboy 2" },
-            };
-
-            imageCarousel.ItemsSource = images;
-            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
-            {
-                if (isAutoSlideEnabled)
-                    MoveToNextSlide();
-
-                return true;
-            });
         }
 
-        private void MoveToNextSlide()
+        private async void GoToYourGallery(object sender, EventArgs e)
         {
-            currentIndex = (currentIndex + 1) % images.Count;
-            imageCarousel.Position = currentIndex;
-        }
+            try
+            {
+                // Otwieranie folderu z obrazami
+                var photo = await MediaPicker.PickPhotoAsync();
 
-        private void OnToggleButtonClicked(object sender, EventArgs e)
-        {
-            isAutoSlideEnabled = !isAutoSlideEnabled;
-            toggleButton.Text = isAutoSlideEnabled ? "Stop Auto Slide" : "Start Auto Slide";
+                if (photo != null)
+                {
+                    // Przekierowanie użytkownika do strony edycji obrazu
+                    await Navigation.PushAsync(new EditImagePage(photo.FullPath));
+                }
+            }
+            catch (Exception ex)
+            {
+                // Obsługa błędów
+                await DisplayAlert("Błąd", $"Wystąpił błąd: {ex.Message}", "OK");
+            }
         }
     }
 }
