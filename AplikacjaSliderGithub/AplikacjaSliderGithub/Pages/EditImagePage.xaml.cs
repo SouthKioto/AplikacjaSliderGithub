@@ -1,9 +1,12 @@
-﻿using SkiaSharp;
+﻿using AplikacjaSliderGithub.Classes;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AplikacjaSliderGithub.Pages
 {
@@ -14,8 +17,9 @@ namespace AplikacjaSliderGithub.Pages
         SKPaint paint;
 
         private string AddedText;
-        private float x = 50; // Domyślna wartość x
-        private float y = 50; // Domyślna wartość y
+        private float x;
+        private float y;
+        private float textSize;
 
         public EditImagePage(string imagePath)
         {
@@ -23,70 +27,60 @@ namespace AplikacjaSliderGithub.Pages
 
             bitmap = SKBitmap.Decode(imagePath);
             skiaView.PaintSurface += OnPaintSurface;
-
-            paint = new SKPaint
-            {
-                Color = SKColors.Red,
-                TextSize = 50,
-                IsAntialias = true,
-            };
         }
 
-        private async Task<(string, float, float)> DisplayCustomPromptAsync()
+        private void DisplayCustomPromptAsync()
         {
             string text = "";
             float x = 0;
             float y = 0;
+            float textSize = 0;
+
+            //TextSettings data = new TextSettings();
 
             StackLayout layout = new StackLayout();
-            Entry textEntry = new Entry { Placeholder = "Enter text", Text="Przykładowy tekst" };
+            Entry textEntry = new Entry { Placeholder = "Enter text" };
             Entry xEntry = new Entry { Placeholder = "Enter X position" };
             Entry yEntry = new Entry { Placeholder = "Enter Y position" };
+            Entry textSizeEntry = new Entry { Placeholder = "Enter text size" };
             Button addData = new Button { Text = "Add Data and Back" };
-            addData.Clicked += BackModal;
+
+            addData.Clicked += (sender, e) =>
+            {
+                text = textEntry.Text;
+                float.TryParse(xEntry.Text, out x);
+                float.TryParse(yEntry.Text, out y);
+                float.TryParse(textSizeEntry.Text, out textSize);
+
+                if (string.IsNullOrEmpty(textEntry.Text))
+                    text = "Przykładowy tekst";
+
+                AddedText = text;
+                this.x = x;
+                this.y = y;
+                this.textSize = textSize;
+                addData.IsEnabled = false;
+                skiaView.InvalidateSurface();
+                Navigation.PopModalAsync();
+            };
+
             layout.Children.Add(textEntry);
             layout.Children.Add(xEntry);
             layout.Children.Add(yEntry);
+            layout.Children.Add(textSizeEntry);
             layout.Children.Add(addData);
 
             ContentPage page = new ContentPage();
             page.Content = layout;
-            await Navigation.PushModalAsync(page);
 
-            if (String.IsNullOrEmpty(text))
-            {
-                text = "Przykładowy tekst";
-                x = 0;
-                y = 0;
-            }
-            else
-            {
-                text = textEntry.Text;
-                x = float.Parse(xEntry.Text);
-                y = float.Parse(yEntry.Text);
-            }
+            Navigation.PushModalAsync(page);
 
-
-            return (text, x, y);
-            
-            
+            //return data;
         }
 
-        public void BackModal(object sender, EventArgs e)
+        private void AddTextOnPhoto(object sender, EventArgs e)
         {
-            Navigation.PopModalAsync();
-        }
-
-        private async void AddTextOnPhoto(object sender, EventArgs e)
-        {
-            (string text, float x, float y) = await DisplayCustomPromptAsync();
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                AddedText = text;
-                this.x = x;
-                this.y = y;
-                skiaView.InvalidateSurface();
-            }
+            DisplayCustomPromptAsync();           
         }
 
         private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -98,13 +92,60 @@ namespace AplikacjaSliderGithub.Pages
 
             if (!string.IsNullOrWhiteSpace(AddedText))
             {
+                paint = new SKPaint
+                {
+                    Color = SKColors.Red,
+                    TextSize = textSize,
+                    IsAntialias = true,
+                };
+
                 canvas.DrawText(AddedText, x, y, paint);
             }
         }
 
         private void SaveChanges_Clicked(object sender, EventArgs e)
         {
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var pathDir = Path.Combine(path, "SlidersImages");
 
+            if (!Directory.Exists(pathDir))
+            {
+                Directory.CreateDirectory(pathDir);
+            }
+
+            string fileName = $"EditedImage_{DateTime.Now:yyyyMMddHHmmss}.png";
+            string filePath = Path.Combine(pathDir, fileName);
+
+            // Tworzenie nowego obrazu z tekstem
+            using (var newBitmap = new SKBitmap(bitmap.Width, bitmap.Height))
+            {
+                using (var canvas = new SKCanvas(newBitmap))
+                {
+
+                    canvas.DrawBitmap(bitmap, new SKPoint(0, 0));
+                    if (!string.IsNullOrWhiteSpace(AddedText))
+                    {
+                        using (var paint = new SKPaint
+                        {
+                            Color = SKColors.Red,
+                            TextSize = textSize,
+                            IsAntialias = true,
+                        })
+                        {
+                            canvas.DrawText(AddedText, x, y, paint);
+                        }
+                    }
+                }
+
+                using (var image = SKImage.FromBitmap(newBitmap))
+                using (var data = image.Encode())
+                using (var stream = File.OpenWrite(filePath))
+                {
+                    data.SaveTo(stream);
+                }
+            }
+
+            DisplayAlert("Success", "Image saved successfully", "OK");
         }
     }
 }

@@ -7,9 +7,12 @@
         <CarouselView x:Name="imageCarousel">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Image Source="{Binding ImageSource}" Aspect="AspectFit" />
-                    </Grid>
+                    <StackLayout>
+                        <Grid>
+                            <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit" />
+                        </Grid>
+                        <Button Text="Delete Image" Clicked="DeleteImage"/>
+                    </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
