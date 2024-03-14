@@ -116,7 +116,6 @@ namespace AplikacjaSliderGithub.Pages
             string fileName = $"EditedImage_{DateTime.Now:yyyyMMddHHmmss}.png";
             string filePath = Path.Combine(pathDir, fileName);
 
-            // Tworzenie nowego obrazu z tekstem
             using (var newBitmap = new SKBitmap(bitmap.Width, bitmap.Height))
             {
                 using (var canvas = new SKCanvas(newBitmap))
