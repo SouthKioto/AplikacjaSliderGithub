@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AplikacjaSliderGithub.MainPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="True">
 
     <StackLayout>
         <CarouselView x:Name="imageCarousel">
@@ -10,9 +10,13 @@
                 <DataTemplate>
                     <StackLayout>
                         <Grid>
-                            <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit" />
+                            <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit"
+                                   Margin="20"/>
                         </Grid>
-                        <Button Text="Delete Image" Clicked="DeleteImage"/>
+                        <Frame Padding="0">
+                            <Button Text="Delete Image" Clicked="DeleteImage"/>
+                        </Frame>
+                       
                     </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
