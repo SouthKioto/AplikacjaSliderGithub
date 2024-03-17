@@ -11,7 +11,8 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout>
-        <CarouselView x:Name="imageCarousel">
+        <CarouselView x:Name="imageCarousel"
+                      Margin="0,80,0,0">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
