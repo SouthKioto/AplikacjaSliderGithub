@@ -19,8 +19,8 @@
                             <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit"
                                    Margin="20"/>
                         </Grid>
-                        <Frame Padding="0">
-                            <Button TextColor="Red" BackgroundColor="Transparent" BorderColor="Red" BorderWidth="3" CornerRadius="90" Text="Delete Image" Clicked="DeleteImage"/>
+                        <Frame BackgroundColor="Transparent" Padding="0" Margin="20">
+                            <Button TextColor="Red" BackgroundColor="White" BorderColor="Red" BorderWidth="3" CornerRadius="90" Text="Delete Image" Clicked="DeleteImage"/>
                         </Frame>
                        
                     </StackLayout>
