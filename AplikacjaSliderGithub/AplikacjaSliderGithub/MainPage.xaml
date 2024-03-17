@@ -2,7 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AplikacjaSliderGithub.MainPage"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="Black">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Your gallery"
+                     Clicked="GoToYourGallery"/>
+    </ContentPage.ToolbarItems>
 
     <StackLayout>
         <CarouselView x:Name="imageCarousel">
@@ -14,7 +20,7 @@
                                    Margin="20"/>
                         </Grid>
                         <Frame Padding="0">
-                            <Button Text="Delete Image" Clicked="DeleteImage"/>
+                            <Button TextColor="Red" BackgroundColor="Transparent" BorderColor="Red" BorderWidth="3" CornerRadius="90" Text="Delete Image" Clicked="DeleteImage"/>
                         </Frame>
                        
                     </StackLayout>
@@ -23,7 +29,7 @@
         </CarouselView>
 
         <!--<Button x:Name="toggleButton" Text="Stop Auto Slide" Clicked="OnToggleButtonClicked"/>-->
-        <Button Text="Your gallery" Clicked="GoToYourGallery"/>
+        <!--Button Text="Your gallery" Clicked="GoToYourGallery"/>-->
     </StackLayout>
 
 </ContentPage>
