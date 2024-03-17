@@ -16,13 +16,15 @@
                 <DataTemplate>
                     <StackLayout>
                         <Grid>
-                            <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit"
-                                   Margin="20"/>
+                            <Frame Padding="0" BorderColor="White" CornerRadius="20" >
+                                <Image Source="{Binding ImageSource}" HeightRequest="500" Aspect="AspectFit"
+                                   Margin="5"/>
+                            </Frame>
                         </Grid>
-                        <Frame BackgroundColor="Transparent" Padding="0" Margin="20">
-                            <Button TextColor="Red" BackgroundColor="White" BorderColor="Red" BorderWidth="3" CornerRadius="90" Text="Delete Image" Clicked="DeleteImage"/>
+                        <Frame Padding="0" BackgroundColor="Transparent" Margin="20">
+                            <Button TextColor="Red" BorderColor="Red" BackgroundColor="White" BorderWidth="3" CornerRadius="90" Text="Delete Image" Clicked="DeleteImage"/>
                         </Frame>
-                       
+
                     </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
