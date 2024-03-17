@@ -1,20 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="AplikacjaSliderGithub.Pages.EditImagePage">
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <skia:SKCanvasView x:Name="skiaView" PaintSurface="OnPaintSurface" Grid.Row="0" />
+            <skia:SKCanvasView x:Name="skiaView" 
+                               PaintSurface="OnPaintSurface" 
+                               Grid.Row="0" 
+                               Margin="10"/>
 
             <StackLayout Grid.Row="1" Margin="10">
-                <Button Text="Add Text" Clicked="AddTextOnPhoto"/>
-                <Button x:Name="SaveChanges" Text="Save Changes" Clicked="SaveChanges_Clicked"/>
+                <Frame Padding="0" BackgroundColor="Transparent">
+                    <Button Text="Add Text" 
+                            Clicked="AddTextOnPhoto"
+                            CornerRadius="90"
+                            BorderWidth="3"
+                            BorderColor="red"
+                            BackgroundColor="White"
+                            TextColor="Red"/>
+                </Frame>
+
+                <Frame Padding="0" BackgroundColor="Transparent">
+                    <Button x:Name="SaveChanges" 
+                        Text="Save Changes" 
+                        Clicked="SaveChanges_Clicked"
+                        CornerRadius="90"
+                        BorderColor="Red"
+                        BorderWidth="3"
+                        BackgroundColor="White"
+                        TextColor="Red"/>
+                </Frame>
+
             </StackLayout>
         </Grid>
     </ContentPage.Content>
