@@ -20,6 +20,7 @@ namespace AplikacjaSliderGithub
             LoadImages();
         }
 
+
         public void LoadImages()
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SlidersImages");
